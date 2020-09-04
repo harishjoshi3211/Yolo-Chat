@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "218543475589",
+    "firebase_url": "https://yolo-chat-82ad7.firebaseio.com",
+    "project_id": "yolo-chat-82ad7",
+    "storage_bucket": "yolo-chat-82ad7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218543475589:android:c33285894f25b21ec492ec",
+        "android_client_info": {
+          "package_name": "com.example.yolochat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218543475589-6mn6g7q3n1bn66esefuvsilsoqk8htk0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD80upOHVWHq8ZMYMuuA68tl7GAFBK0PxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218543475589-6mn6g7q3n1bn66esefuvsilsoqk8htk0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
