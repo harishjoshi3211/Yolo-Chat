@@ -38,8 +38,8 @@ import java.util.UUID;
 public class profile extends AppCompatActivity {
 
 
-    TextView name,status;
-    Button statusbtn,upload_btn;
+    TextView name,status,profile_loc,profile_prof;
+    Button statusbtn,upload_btn,epi;
     ImageView image_upload;
     final int PICK_Image=10;
     private DatabaseReference mDatabase;
@@ -57,6 +57,9 @@ public class profile extends AppCompatActivity {
         statusbtn=findViewById(R.id.statusbtn);
         upload_btn=findViewById(R.id.upload_btn);
         image_upload=findViewById(R.id.image_upload);
+        profile_loc=findViewById(R.id.profile_loc);
+        profile_prof=findViewById(R.id.profile_prof);
+        epi=findViewById(R.id.epi);
 
         user= FirebaseAuth.getInstance().getCurrentUser();
         String uid=user.getUid();
@@ -64,6 +67,14 @@ public class profile extends AppCompatActivity {
         storageReference=FirebaseStorage.getInstance().getReference().child("users").child(uid);
         databaseReferencefordp=FirebaseDatabase.getInstance().getReference().child(uid);
 
+
+        epi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(profile.this,edit_personal_details.class);
+                startActivity(intent);
+            }
+        });
         /*databaseReferencefordp.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,6 +104,9 @@ public class profile extends AppCompatActivity {
 
                 name.setText(snapshot.child("name").getValue().toString());
                 status.setText(snapshot.child("status").getValue().toString());
+                profile_loc.setText(snapshot.child("location").getValue().toString());
+                profile_prof.setText(snapshot.child("profession").getValue().toString());
+
             }
 
             @Override

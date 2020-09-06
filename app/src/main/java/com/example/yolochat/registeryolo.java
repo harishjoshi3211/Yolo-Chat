@@ -85,6 +85,8 @@ public class registeryolo extends AppCompatActivity {
                     HashMap<String,String> mp=new HashMap<>();
                     mp.put("name",name);
                     mp.put("status","hi using yolo");
+                    mp.put("location","anonymous");
+                    mp.put("profession","anonymous");
 
                     mDatabase.setValue(mp).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

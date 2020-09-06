@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements friends_adapter.itemclicked,requests_adapter.itemclicked_req {
 
 
 
@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(tb);
         getSupportActionBar().setTitle("YOLO Chats");
 
-        va=new viewpadapter(getSupportFragmentManager(),0);
-        vp.setAdapter(va);
+        //va=new viewpadapter(getSupportFragmentManager(),0);
+        //vp.setAdapter(va);
 
-        tbl.setupWithViewPager(vp);
+        //tbl.setupWithViewPager(vp);
 
 
 
@@ -66,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(MainActivity.this,welcome_page.class);
             startActivity(intent);
             finish();
+        }
+        else
+        {
+            va=new viewpadapter(getSupportFragmentManager(),0);
+            vp.setAdapter(va);
+
+            tbl.setupWithViewPager(vp);
+
         }
     }
     @Override
@@ -97,5 +105,22 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return true;
+    }
+
+    @Override
+    public void onitemclicked(String uid) {
+
+        Intent intent=new Intent(MainActivity.this,person_profile.class);
+        intent.putExtra("uid",uid);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onitemclicked2(int index, String uid) {
+
+        Intent intent=new Intent(MainActivity.this,person_profile.class);
+        intent.putExtra("uid",uid);
+        startActivity(intent);
+
     }
 }

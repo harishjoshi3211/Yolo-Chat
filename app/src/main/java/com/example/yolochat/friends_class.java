@@ -1,19 +1,21 @@
 package com.example.yolochat;
 
-public class users {
+public class friends_class {
+
 
     private String name;
     private String status;
     private String uid;
 
-    public users(){
+    public friends_class(){
 
     }
 
-    public users(String name,String status)
+    public friends_class(String name,String status,String uid)
     {
         this.name=name;
         this.status=status;
+        this.uid=uid;
     }
     public String getName() {
         return name;
@@ -31,4 +33,11 @@ public class users {
         this.status = status;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }

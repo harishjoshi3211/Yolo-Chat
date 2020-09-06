@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,11 +23,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class person_profile extends AppCompatActivity {
 
-    TextView name,status;
-    Button snd_req;
+    TextView name,status,per_loc,per_prof;
+    Button snd_req,unfriend_btn,message_btn;
     private DatabaseReference mdatabase,mDatabaserequest,mDatabasefriend;
     private FirebaseUser curr_user;
     private String sent_or_not;
+    private LinearLayout req_layout,fri_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,11 +37,21 @@ public class person_profile extends AppCompatActivity {
         name=findViewById(R.id.name);
         snd_req=findViewById(R.id.snd_req);
         status=findViewById(R.id.status);
+        per_loc=findViewById(R.id.per_loc);
+        per_prof=findViewById(R.id.per_prof);
+        req_layout=findViewById(R.id.req_layout);
+        fri_layout=findViewById(R.id.fri_layout);
+
+        unfriend_btn=findViewById(R.id.unfriend_btn);
+        message_btn=findViewById(R.id.message_btn);
 
         curr_user= FirebaseAuth.getInstance().getCurrentUser();
         final String curr_user_id=curr_user.getUid();
         sent_or_not="not";
 
+        req_layout.setVisibility(View.GONE);
+        fri_layout.setVisibility(View.GONE);
+        
         final String uid=getIntent().getStringExtra("uid");
         mDatabaserequest=FirebaseDatabase.getInstance().getReference().child("requests");
         mDatabasefriend=FirebaseDatabase.getInstance().getReference().child("friends");
@@ -53,6 +66,8 @@ public class person_profile extends AppCompatActivity {
 
                 name.setText(name2);
                 status.setText(status2);
+                per_loc.setText(snapshot.child("location").getValue().toString());
+                per_prof.setText(snapshot.child("profession").getValue().toString());
 
             }
 
@@ -77,6 +92,27 @@ public class person_profile extends AppCompatActivity {
                         sent_or_not = "req_received";
                         snd_req.setText("confirm friend request");
                     }
+                    req_layout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    mDatabasefriend.child(curr_user_id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            if(snapshot.hasChild(uid)){
+                                fri_layout.setVisibility(View.VISIBLE);
+                            }
+                            else{
+                                req_layout.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 
@@ -105,8 +141,18 @@ public class person_profile extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            sent_or_not="yes";
-                                            snd_req.setText("cancel sent request");
+
+                                            mDatabaserequest.child(uid).child(curr_user_id).child("uid").setValue((curr_user_id)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                    if(task.isSuccessful()){
+                                                        sent_or_not="yes";
+                                                        snd_req.setText("cancel sent request");
+
+                                                    }
+                                                }
+                                            });
 
                                         }
                                     }
@@ -190,6 +236,34 @@ public class person_profile extends AppCompatActivity {
             }
         });
 
+        unfriend_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDatabasefriend.child(curr_user_id).child(uid).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if(task.isSuccessful())
+                        {
+                            mDatabasefriend.child(uid).child(curr_user_id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if(task.isSuccessful()){
+
+                                        req_layout.setVisibility(View.VISIBLE);
+                                        fri_layout.setVisibility(View.GONE);
+
+
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
 
     }
 }
