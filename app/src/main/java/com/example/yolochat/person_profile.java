@@ -3,6 +3,7 @@ package com.example.yolochat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.View;
@@ -262,6 +263,16 @@ public class person_profile extends AppCompatActivity {
                         }
                     }
                 });
+            }
+        });
+
+        message_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(person_profile.this,message.class);
+                intent.putExtra("uid",uid);
+                startActivity(intent);
             }
         });
 

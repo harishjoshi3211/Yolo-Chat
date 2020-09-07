@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity implements friends_adapter.itemclicked,requests_adapter.itemclicked_req {
+public class MainActivity extends AppCompatActivity implements friends_adapter.itemclicked,requests_adapter.itemclicked_req,chat_list_adapter.itemclicked {
 
 
 
@@ -119,6 +119,15 @@ public class MainActivity extends AppCompatActivity implements friends_adapter.i
     public void onitemclicked2(int index, String uid) {
 
         Intent intent=new Intent(MainActivity.this,person_profile.class);
+        intent.putExtra("uid",uid);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onitemclicked_chat(String uid) {
+
+        Intent intent=new Intent(MainActivity.this,message.class);
         intent.putExtra("uid",uid);
         startActivity(intent);
 

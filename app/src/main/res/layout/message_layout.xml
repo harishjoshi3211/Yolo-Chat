@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_msg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#F8BBD0"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/friend_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#3F51B5"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/friend_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textColor="#757575"
+        android:textSize="18sp" />
+</LinearLayout>
